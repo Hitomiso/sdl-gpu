@@ -1,3 +1,7 @@
+#if defined(SDL_GPU_DYNAMIC_GLES_2)
+    #include "gl2stub.c"
+#endif
+
 #include "SDL_gpu_GLES_2.h"
 #include "SDL_gpu_RendererImpl.h"
 
@@ -29,7 +33,13 @@ void GPU_FreeRenderer_GLES_2(GPU_Renderer* renderer) {}
 
 GPU_Renderer* GPU_CreateRenderer_GLES_2(GPU_RendererID request)
 {
-    GPU_Renderer* renderer = (GPU_Renderer*)SDL_malloc(sizeof(GPU_Renderer));
+    GPU_Renderer* renderer;
+    #ifdef SDL_GPU_DYNAMIC_GLES_2
+    if(!gl2stubInit())
+        return NULL;
+    #endif
+
+    renderer = (GPU_Renderer*)SDL_malloc(sizeof(GPU_Renderer));
     if(renderer == NULL)
         return NULL;
 

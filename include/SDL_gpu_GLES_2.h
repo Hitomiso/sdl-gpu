@@ -6,9 +6,16 @@
 
 #if !defined(SDL_GPU_DISABLE_GLES) && !defined(SDL_GPU_DISABLE_GLES_2)
 
+#ifndef GL_GLEXT_PROTOTYPES
+    #define GL_GLEXT_PROTOTYPES 1
+#endif
+
 #ifdef __IPHONEOS__
     #include <OpenGLES/ES2/gl.h>
     #include <OpenGLES/ES2/glext.h>
+#elif defined(SDL_GPU_DYNAMIC_GLES_2)
+    #include "gl2stub.h"
+    #include "gl2stub_ext.h"
 #else
     #include "GLES2/gl2.h"
     #include "GLES2/gl2ext.h"

@@ -6,11 +6,20 @@
 
 #if !defined(SDL_GPU_DISABLE_GLES) && !defined(SDL_GPU_DISABLE_GLES_3)
 
+#ifndef GL_GLEXT_PROTOTYPES
+    #define GL_GLEXT_PROTOTYPES 1
+#endif
+
 #ifdef __IPHONEOS__
     #include <OpenGLES/ES3/gl.h>
     #include <OpenGLES/ES3/glext.h>
 #elif defined(SDL_GPU_DYNAMIC_GLES_3)
     #include "gl3stub.h"
+    #ifdef SDL_GPU_DYNAMIC_GLES_2
+        #include "gl2stub_ext.h"
+    #else
+        #include "GLES2/gl2ext.h"
+    #endif
 #else
     #include "GLES3/gl3.h"
     #include "GLES2/gl2ext.h"

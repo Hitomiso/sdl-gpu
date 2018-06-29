@@ -1,3 +1,10 @@
+#if defined(SDL_GPU_DYNAMIC_GLES_3)
+    #if defined(SDL_GPU_DYNAMIC_GLES_2)
+        #include "gl2stub.c"
+    #endif
+    #include "gl3stub.c"
+#endif
+
 #include "SDL_gpu_GLES_3.h"
 #include "SDL_gpu_RendererImpl.h"
 
@@ -9,10 +16,6 @@ GPU_Renderer* GPU_CreateRenderer_GLES_3(GPU_RendererID request) {return NULL;}
 void GPU_FreeRenderer_GLES_3(GPU_Renderer* renderer) {}
 
 #else
-
-#if defined(SDL_GPU_DYNAMIC_GLES_3)
-    #include "gl3stub.c"
-#endif
 
 // Most of the code pulled in from here...
 #define SDL_GPU_USE_GLES
@@ -34,6 +37,10 @@ GPU_Renderer* GPU_CreateRenderer_GLES_3(GPU_RendererID request)
 {
     GPU_Renderer* renderer;
     #ifdef SDL_GPU_DYNAMIC_GLES_3
+    #ifdef SDL_GPU_DYNAMIC_GLES_2
+    if(!gl2stubInit())
+        return NULL;
+    #endif
     if(!gl3stubInit())
         return NULL;
     #endif
