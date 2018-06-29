@@ -5,14 +5,17 @@
 
 #if !defined(SDL_GPU_DISABLE_OPENGL) && !defined(SDL_GPU_DISABLE_OPENGL_4)
 
-    // Hacks to fix compile errors due to polluted namespace
-    #ifdef _WIN32
-    #define _WINUSER_H
-    #define _WINGDI_H
-    #endif
-    
-    #include "glew.h"
-	
+	#if defined(SDL_GPU_USE_EPOXY)
+		#include <epoxy/gl.h>
+	#else
+		// Hacks to fix compile errors due to polluted namespace
+		#ifdef _WIN32
+		#define _WINUSER_H
+		#define _WINGDI_H
+		#endif
+		#include "glew.h"
+	#endif
+
 	#if defined(GL_EXT_bgr) && !defined(GL_BGR)
 		#define GL_BGR GL_BGR_EXT
 	#endif

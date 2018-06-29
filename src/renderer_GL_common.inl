@@ -259,7 +259,11 @@ static char shader_message[256];
 static GPU_bool isExtensionSupported(const char* extension_str)
 {
 #ifdef SDL_GPU_USE_OPENGL
-    return glewIsExtensionSupported(extension_str);
+    #if defined(SDL_GPU_USE_EPOXY)
+        return epoxy_has_gl_extension(extension_str);
+    #else
+        return glewIsExtensionSupported(extension_str);
+    #endif
 #else
     // As suggested by Mesa3D.org
     char* p = (char*)glGetString(GL_EXTENSIONS);
@@ -1628,7 +1632,7 @@ static GPU_Target* CreateTargetFromWindow(GPU_Renderer* renderer, Uint32 windowI
     cdata->last_depth_test = GPU_FALSE;
     cdata->last_depth_write = GPU_TRUE;
 
-    #ifdef SDL_GPU_USE_OPENGL
+    #if defined(SDL_GPU_USE_OPENGL) && !defined(SDL_GPU_USE_EPOXY)
     glewExperimental = GL_TRUE;  // Force GLEW to get exported functions instead of checking via extension string
     err = glewInit();
     if (GLEW_OK != err)

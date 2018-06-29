@@ -71,6 +71,7 @@ option(SDL_gpu_DISABLE_GLES_1 "Disable OpenGLES 1.X renderer" OFF)
 option(SDL_gpu_DISABLE_GLES_2 "Disable OpenGLES 2.X renderer" OFF)
 option(SDL_gpu_DISABLE_GLES_3 "Disable OpenGLES 3.X renderer" OFF)
 
+option(SDL_gpu_USE_SYSTEM_EPOXY "Attempt to use the system EPOXY instead of GLEW" OFF)
 option(SDL_gpu_USE_SYSTEM_GLEW "Attempt to use the system GLEW library (may not support GL 3+)" OFF)
 option(SDL_gpu_DYNAMIC_GLES_3 "Attempt to run-time link to GLES 3" OFF)
 
@@ -170,31 +171,35 @@ else (SDL_gpu_DISABLE_OPENGL)
 		add_definitions("-DSDL_GPU_DISABLE_OPENGL_4")
 	endif (SDL_gpu_DISABLE_OPENGL_4)
 
-	if(SDL_gpu_USE_SYSTEM_GLEW)
-	    # If glew is not found here, we’ll use the bundled version
-		find_package(GLEW)
+	if(SDL_gpu_USE_SYSTEM_EPOXY)
+		add_definitions("-DSDL_GPU_USE_EPOXY")
+		link_libraries("-lepoxy")
+	else()
+		if(SDL_gpu_USE_SYSTEM_GLEW)
+			# If glew is not found here, we’ll use the bundled version
+			find_package(GLEW)
+		endif()
+
+		if(NOT GLEW_FOUND)
+			message(" Using bundled version of GLEW")
+		endif(NOT GLEW_FOUND)
+
+		if (NOT SDL_gpu_DISABLE_OPENGL)
+			if(GLEW_FOUND)
+				# Look in the GL subdirectory, too.
+				foreach(GL_DIR ${GLEW_INCLUDE_DIRS})
+					set(GLEW_GL_DIRS ${GLEW_GL_DIRS} "${GL_DIR}/GL")
+				endforeach(GL_DIR ${GLEW_INCLUDE_DIRS})
+
+				include_directories(${GLEW_INCLUDE_DIRS} ${GLEW_GL_DIRS})
+				link_libraries (${GLEW_LIBRARIES})
+			else(GLEW_FOUND)
+				SET(SDL_gpu_SRCS ${SDL_gpu_SRCS} externals/glew/glew.c)
+				SET(SDL_gpu_HDRS ${SDL_gpu_HDRS} externals/glew/GL/glew.h externals/glew/GL/glxew.h externals/glew/GL/wglew.h)
+				add_definitions("-DGLEW_STATIC")
+			endif(GLEW_FOUND)
+		endif(NOT SDL_gpu_DISABLE_OPENGL)
 	endif()
-
-    if(NOT GLEW_FOUND)
-        message(" Using bundled version of GLEW")
-    endif(NOT GLEW_FOUND)
-
-
-	if (NOT SDL_gpu_DISABLE_OPENGL)
-		if(GLEW_FOUND)
-			# Look in the GL subdirectory, too.
-			foreach(GL_DIR ${GLEW_INCLUDE_DIRS})
-				set(GLEW_GL_DIRS ${GLEW_GL_DIRS} "${GL_DIR}/GL")
-			endforeach(GL_DIR ${GLEW_INCLUDE_DIRS})
-
-			include_directories(${GLEW_INCLUDE_DIRS} ${GLEW_GL_DIRS})
-			link_libraries (${GLEW_LIBRARIES})
-		else(GLEW_FOUND)
-			SET(SDL_gpu_SRCS ${SDL_gpu_SRCS} externals/glew/glew.c)
-			SET(SDL_gpu_HDRS ${SDL_gpu_HDRS} externals/glew/GL/glew.h externals/glew/GL/glxew.h externals/glew/GL/wglew.h)
-			add_definitions("-DGLEW_STATIC")
-		endif(GLEW_FOUND)
-	endif(NOT SDL_gpu_DISABLE_OPENGL)
 
 endif (SDL_gpu_DISABLE_OPENGL)
 
