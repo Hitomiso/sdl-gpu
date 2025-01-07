@@ -7,8 +7,11 @@
     #include "gl3stub.h"
 #endif
 
-#include "SDL_gpu_GLES_3.h"
-#include "SDL_gpu_RendererImpl.h"
+#ifndef GLES_3_INT_DEF
+    #define GLES_3_INT_DEF
+    #include "SDL_gpu_GLES_3.h"
+    #include "SDL_gpu_RendererImpl.h"
+#endif
 
 
 #if defined(SDL_GPU_DISABLE_GLES) || defined(SDL_GPU_DISABLE_GLES_3)

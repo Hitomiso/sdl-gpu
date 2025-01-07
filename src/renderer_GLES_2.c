@@ -28,8 +28,11 @@ void GPU_FreeRenderer_GLES_2(GPU_Renderer* renderer) {}
 #define SDL_GPU_DISABLE_TEXTURE_GETS
 #define SDL_GPU_NO_VAO
 
-#include "renderer_GL_common.inl"
-#include "renderer_shapes_GL_common.inl"
+#ifndef GLES_2_INT_DEF
+    #define GLES_2_INT_DEF
+    #include "renderer_GL_common.inl"
+    #include "renderer_shapes_GL_common.inl"
+#endif
 
 
 GPU_Renderer* GPU_CreateRenderer_GLES_2(GPU_RendererID request)
