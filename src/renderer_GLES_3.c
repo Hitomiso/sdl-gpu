@@ -3,8 +3,8 @@
         // #include "gl2stub.c"
         #include "gl2stub.h"
     #endif
-    // #include "gl3stub.c"
-    #include "gl3stub.h"
+    #include "gl3stub.c"
+    // #include "gl3stub.h"
 #endif
 
 
