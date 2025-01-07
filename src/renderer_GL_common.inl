@@ -1,5 +1,6 @@
 /* This is an implementation file to be included after certain #defines have been set.
 See a particular renderer's *.c file for specifics. */
+#pragma once
 
 #if !defined(GLAPIENTRY)
     #if defined(GL_APIENTRY)
