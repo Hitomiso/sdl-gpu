@@ -32,11 +32,11 @@ void GPU_FreeRenderer_GLES_3(GPU_Renderer* renderer) {}
 // TODO: Make this dynamic because GLES 3.1 supports it
 #define SDL_GPU_DISABLE_TEXTURE_GETS
 
-#ifndef GLES_3_INT_DEF
-    #define GLES_3_INT_DEF
+//#ifndef GLES_3_INT_DEF
+    //#define GLES_3_INT_DEF
     #include "renderer_GL_common.inl"
     #include "renderer_shapes_GL_common.inl"
-#endif
+//#endif
 
 GPU_Renderer* GPU_CreateRenderer_GLES_3(GPU_RendererID request)
 {
