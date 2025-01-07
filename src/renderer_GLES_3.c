@@ -7,11 +7,9 @@
     #include "gl3stub.h"
 #endif
 
-#ifndef GLES_3_INT_DEF
-    #define GLES_3_INT_DEF
-    #include "SDL_gpu_GLES_3.h"
-    #include "SDL_gpu_RendererImpl.h"
-#endif
+
+#include "SDL_gpu_GLES_3.h"
+#include "SDL_gpu_RendererImpl.h"
 
 
 #if defined(SDL_GPU_DISABLE_GLES) || defined(SDL_GPU_DISABLE_GLES_3)
@@ -34,9 +32,11 @@ void GPU_FreeRenderer_GLES_3(GPU_Renderer* renderer) {}
 // TODO: Make this dynamic because GLES 3.1 supports it
 #define SDL_GPU_DISABLE_TEXTURE_GETS
 
-#include "renderer_GL_common.inl"
-#include "renderer_shapes_GL_common.inl"
-
+#ifndef GLES_3_INT_DEF
+    #define GLES_3_INT_DEF
+    #include "renderer_GL_common.inl"
+    #include "renderer_shapes_GL_common.inl"
+#endif
 
 GPU_Renderer* GPU_CreateRenderer_GLES_3(GPU_RendererID request)
 {
