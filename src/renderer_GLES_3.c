@@ -1,7 +1,7 @@
 #if defined(SDL_GPU_DYNAMIC_GLES_3)
     #if defined(SDL_GPU_DYNAMIC_GLES_2)
-        // #include "gl2stub.c"
-        #include "gl2stub.h"
+        #include "gl2stub.c"
+        // #include "gl2stub.h"
     #endif
     #include "gl3stub.c"
     // #include "gl3stub.h"
