@@ -1,6 +1,6 @@
 #if defined(SDL_GPU_DYNAMIC_GLES_2)
-    // #include "gl2stub.c"
-    #include "gl2stub.h"
+    #include "gl2stub.c" // Here can be multiple definitions...
+    // #include "gl2stub.h"
 #endif
 
 #include "SDL_gpu_GLES_2.h"
