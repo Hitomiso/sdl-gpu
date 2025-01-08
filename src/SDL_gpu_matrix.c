@@ -510,12 +510,12 @@ void GPU_PushMatrix(void)
 void GPU_PopMatrix(void)
 {
     GPU_Target* target = GPU_GetContextTarget();
-	GPU_MatrixStack* stack;
+    GPU_MatrixStack* stack;
 
     if(target == NULL || target->context == NULL)
         return;
-        
-	GPU_FlushBlitBuffer();
+    
+    GPU_FlushBlitBuffer();
     stack = (target->context->matrix_mode == GPU_MODELVIEW? &target->context->modelview_matrix : &target->context->projection_matrix);
     if(stack->size == 0)
     {
@@ -544,7 +544,7 @@ void GPU_LoadMatrix(const float* A)
     float* result = GPU_GetCurrentMatrix();
     if(result == NULL)
         return;
-	GPU_FlushBlitBuffer();
+    GPU_FlushBlitBuffer();
     GPU_MatrixCopy(result, A);
 }
 
@@ -583,7 +583,7 @@ void GPU_MultMatrix(const float* A)
     float* result = GPU_GetCurrentMatrix();
     if(result == NULL)
         return;
-	GPU_FlushBlitBuffer();
+    GPU_FlushBlitBuffer();
 	// BIG FIXME: All of these matrix stack manipulators should be flushing the blit buffer.
 	// A better solution would be to minimize the matrix stack API and make it clear that MultMatrix flushes.
     GPU_MultiplyAndAssign(result, A);

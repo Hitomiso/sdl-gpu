@@ -186,9 +186,9 @@ void gpu_register_built_in_renderers(void)
         #endif
 	
         #ifndef SDL_GPU_DISABLE_OPENGL_2
-            GPU_RegisterRenderer(GPU_MakeRendererID("OpenGL 2", GPU_RENDERER_OPENGL_2, 2, 0),
-                                 &GPU_CreateRenderer_OpenGL_2,
-                                 &GPU_FreeRenderer_OpenGL_2);
+        GPU_RegisterRenderer(GPU_MakeRendererID("OpenGL 2", GPU_RENDERER_OPENGL_2, 2, 0),
+                             &GPU_CreateRenderer_OpenGL_2,
+                             &GPU_FreeRenderer_OpenGL_2);
         #endif
 	
         #ifndef SDL_GPU_DISABLE_OPENGL_3
@@ -488,7 +488,7 @@ void GPU_FreeRenderer(GPU_Renderer* renderer)
     current_renderer = GPU_GetCurrentRenderer();
     if(current_renderer == renderer)
         GPU_SetCurrentRenderer(GPU_MakeRendererID("Unknown", GPU_RENDERER_UNKNOWN, 0, 0));
-        
+    
 	for(i = 0; i < GPU_MAX_ACTIVE_RENDERERS; i++)
 	{
 		if(renderer == _gpu_renderer_map[i])

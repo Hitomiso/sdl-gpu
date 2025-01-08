@@ -88,20 +88,20 @@ See a particular renderer's *.c file for specifics. */
 
 static float SetLineThickness(GPU_Renderer* renderer, float thickness)
 {
-	float old;
-
+    float old;
+    
     if(renderer->current_context_target == NULL)
         return 1.0f;
     
-	old = renderer->current_context_target->context->line_thickness;
-	if(old != thickness)
+    old = renderer->current_context_target->context->line_thickness;
+    if(old != thickness)
         renderer->impl->FlushBlitBuffer(renderer);
     
-	renderer->current_context_target->context->line_thickness = thickness;
-	#ifndef SDL_GPU_SKIP_LINE_WIDTH
-	glLineWidth(thickness);
-	#endif
-	return old;
+    renderer->current_context_target->context->line_thickness = thickness;
+    #ifndef SDL_GPU_SKIP_LINE_WIDTH
+    glLineWidth(thickness);
+    #endif
+    return old;
 }
 
 static float GetLineThickness(GPU_Renderer* renderer)
