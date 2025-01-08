@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#pragma once
+// #pragma once
 
 #ifndef __gl3_h_
 #define __gl3_h_

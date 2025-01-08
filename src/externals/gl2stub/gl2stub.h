@@ -1,4 +1,4 @@
-#pragma once
+// #pragma once
 #ifndef __gl2_h_
 #define __gl2_h_ 1
 
@@ -666,7 +666,7 @@ extern GL_APICALL void (*GL_APIENTRY glVertexAttrib4f) (GLuint index, GLfloat x,
 extern GL_APICALL void (*GL_APIENTRY glVertexAttrib4fv) (GLuint index, const GLfloat *v);
 extern GL_APICALL void (*GL_APIENTRY glVertexAttribPointer) (GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const void *pointer);
 extern GL_APICALL void (*GL_APIENTRY glViewport) (GLint x, GLint y, GLsizei width, GLsizei height);
-// static GLboolean gl2stubInit(); // Crutch for renderer_GLES_2.c
+static GLboolean gl2stubInit(); // Crutch for renderer_GLES_2.c
 #endif
 #endif /* GL_ES_VERSION_2_0 */
 
