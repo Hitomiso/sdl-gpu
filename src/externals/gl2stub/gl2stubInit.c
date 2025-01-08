@@ -1,4 +1,50 @@
 #include "gl2stub.h"
+#include "SDL.h"
+
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wpedantic"
+
+// Visual C does not support static inline
+#ifndef static_inline
+    #ifdef _MSC_VER
+        #define static_inline static
+    #else
+        #define static_inline static inline
+    #endif
+#endif
+
+#ifdef _WIN32
+  #define GL2STUB_GLES2_LIBRARY "libGLESv2.dll"
+
+  static_inline int IsWindowsVistaOrGreater() {
+    // Avoiding windows.h
+    struct /* OSVERSIONINFO */ {
+      unsigned dwOSVersionInfoSize;
+      unsigned dwMajorVersion;
+      unsigned dwMinorVersion;
+      unsigned dwBuildNumber;
+      unsigned dwPlatformId;
+      char     szCSDVersion[128];
+    } verinfo = {};
+
+    verinfo.dwOSVersionInfoSize = sizeof(verinfo);
+    void *kernel32 = SDL_LoadObject("kernel32.dll");
+    if (kernel32) {
+      char (*__stdcall pGetVersionEx)(void *) = SDL_LoadFunction(kernel32, "GetVersionExA");
+      if (pGetVersionEx && !pGetVersionEx(&verinfo))
+        verinfo.dwMajorVersion = 0;
+      SDL_UnloadObject(kernel32);
+    }
+
+    return verinfo.dwMajorVersion >= 6;
+  }
+#else
+  // Currently macOS does not appear to be supported by SDL, default to Unix-like name.
+  #define GL2STUB_GLES2_LIBRARY "libGLESv2.so"
+#endif
+
+static void *gles2handle;
+
 
 static GLboolean gl2stubInit() {
   // We cannot call SDL_EGL_LoadLibrary, sicne SDL_GL_LoadLibrary will default to WIN_GL_LoadLibrary.

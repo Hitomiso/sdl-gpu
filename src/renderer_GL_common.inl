@@ -6298,8 +6298,8 @@ static void SetShaderImage(GPU_Renderer* renderer, GPU_Image* image, int locatio
 {
     // TODO: OpenGL 1 needs to check for ARB_multitexture to use glActiveTexture().
     #ifndef SDL_GPU_DISABLE_SHADERS
-	Uint32 new_texture;
-    
+    Uint32 new_texture;
+
     if(!IsFeatureEnabled(renderer, GPU_FEATURE_BASIC_SHADERS))
         return;
     
@@ -6319,12 +6319,12 @@ static void SetShaderImage(GPU_Renderer* renderer, GPU_Image* image, int locatio
     if(image_unit != 0)
         glActiveTexture(GL_TEXTURE0);
     
-	#endif
-
-	(void)renderer;
-	(void)image;
-	(void)location;
-	(void)image_unit;
+    #endif
+    
+    (void)renderer;
+    (void)image;
+    (void)location;
+    (void)image_unit;
 }
 
 
