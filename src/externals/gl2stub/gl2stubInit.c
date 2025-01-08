@@ -1,4 +1,4 @@
-/*static*/ GLboolean gl2stubInit() {
+static GLboolean gl2stubInit() {
   // We cannot call SDL_EGL_LoadLibrary, sicne SDL_GL_LoadLibrary will default to WIN_GL_LoadLibrary.
   // Therefore we partially reimplement it.
 

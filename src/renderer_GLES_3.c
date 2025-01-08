@@ -33,9 +33,9 @@ void GPU_FreeRenderer_GLES_3(GPU_Renderer* renderer) {}
 #define SDL_GPU_DISABLE_TEXTURE_GETS
 
 //#ifndef GLES_3_INT_DEF
-    //#define GLES_3_INT_DEF
-    #include "renderer_GL_common.inl"
-    #include "renderer_shapes_GL_common.inl"
+//#define GLES_3_INT_DEF
+#include "renderer_GL_common.inl"
+#include "renderer_shapes_GL_common.inl"
 //#endif
 
 GPU_Renderer* GPU_CreateRenderer_GLES_3(GPU_RendererID request)
